@@ -27,7 +27,7 @@ local function check_member_autorealm(cb_extra, success, result)
       end
       data[tostring(realms)][tostring(msg.to.id)] = msg.to.id
       save_data(_config.moderation.data, data)
-      return send_large_msg(receiver, 'Welcome to your new realm !')
+      return send_large_msg(receiver, '•••Welcome to your new realm•••')
     end
   end
 end
@@ -57,7 +57,7 @@ local function check_member_realm_add(cb_extra, success, result)
       end
       data[tostring(realms)][tostring(msg.to.id)] = msg.to.id
       save_data(_config.moderation.data, data)
-      return send_large_msg(receiver, 'Realm has been added!')
+      return send_large_msg(receiver, 'Realm has been added!✅')
     end
   end
 end
@@ -89,7 +89,7 @@ function check_member_group(cb_extra, success, result)
       end
       data[tostring(groups)][tostring(msg.to.id)] = msg.to.id
       save_data(_config.moderation.data, data)
-      return send_large_msg(receiver, 'You have been promoted as the owner.')
+      return send_large_msg(receiver, '🌐You have been promoted as the owner✅')
     end
   end
 end
@@ -121,7 +121,7 @@ local function check_member_modadd(cb_extra, success, result)
       end
       data[tostring(groups)][tostring(msg.to.id)] = msg.to.id
       save_data(_config.moderation.data, data)
-      return send_large_msg(receiver, 'Group is added and you have been promoted as the owner ')
+      return send_large_msg(receiver, '🌐Group is added and you promoted as the owner✅ ')
     end
   end
 end
@@ -156,7 +156,7 @@ local function check_member_realmrem(cb_extra, success, result)
       end
       data[tostring(realms)][tostring(msg.to.id)] = nil
       save_data(_config.moderation.data, data)
-      return send_large_msg(receiver, 'Realm has been removed!')
+      return send_large_msg(receiver, 'Realm has been removed!❌')
     end
   end
 end
@@ -177,7 +177,7 @@ local function check_member_modrem(cb_extra, success, result)
       end
       data[tostring(groups)][tostring(msg.to.id)] = nil
       save_data(_config.moderation.data, data)
-      return send_large_msg(receiver, 'Group has been removed')
+      return send_large_msg(receiver, 'Group has been removed📵')
     end
   end
 end
@@ -538,7 +538,7 @@ local function promote(receiver, member_username, member_id)
   end
   data[group]['moderators'][tostring(member_id)] = member_username
   save_data(_config.moderation.data, data)
-  return send_large_msg(receiver, member_username..' has been promoted.')
+  return send_large_msg(receiver, member_username..' has been promoted😎')
 end
 
 local function promote_by_reply(extra, success, result)
@@ -562,7 +562,7 @@ local function demote(receiver, member_username, member_id)
     return send_large_msg(receiver, 'Group is not added.')
   end
   if not data[group]['moderators'][tostring(member_id)] then
-    return send_large_msg(receiver, member_username..' is not a moderator.')
+    return send_large_msg(receiver, member_username..' is not a moderator❌.')
   end
   data[group]['moderators'][tostring(member_id)] = nil
   save_data(_config.moderation.data, data)
@@ -737,22 +737,22 @@ local function run(msg, matches)
     if is_realm(msg) then
        return 'Error: Already a realm.'
     end
-    print("group "..msg.to.print_name.."("..msg.to.id..") added")
+    print("group "..msg.to.print_name.."("..msg.to.id..") added✅")
     return modadd(msg)
   end
    if matches[1] == 'add' and matches[2] == 'realm' then
     if is_group(msg) then
        return 'Error: Already a group.'
     end
-    print("group "..msg.to.print_name.."("..msg.to.id..") added as a realm")
+    print("group "..msg.to.print_name.."("..msg.to.id..") added as a realm✅")
     return realmadd(msg)
   end
   if matches[1] == 'rem' and not matches[2] then
-    print("group "..msg.to.print_name.."("..msg.to.id..") removed")
+    print("group "..msg.to.print_name.."("..msg.to.id..") removed❌")
     return modrem(msg)
   end
   if matches[1] == 'rem' and matches[2] == 'realm' then
-    print("group "..msg.to.print_name.."("..msg.to.id..") removed as a realm")
+    print("group "..msg.to.print_name.."("..msg.to.id..") removed as a realm❌")
     return realmrem(msg)
   end
   if matches[1] == 'chat_created' and msg.from.id == 0 and group_type == "group" then
@@ -974,58 +974,58 @@ local function run(msg, matches)
     if matches[1] == 'lock' then
       local target = msg.to.id
       if matches[2] == 'name' then
-        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked name ")
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] •••locked name 〰〰 ")
         return lock_group_namemod(msg, data, target)
       end
       if matches[2] == 'member' then
-        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked member ")
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] •••locked member 👀 ")
         return lock_group_membermod(msg, data, target)
         end
       if matches[2] == 'flood' then
-        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked flood ")
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] •••locked flood ⛔️ ")
         return lock_group_floodmod(msg, data, target)
       end
       if matches[2] == 'arabic' then
-        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked arabic ")
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] •••locked arabic 🗣 ")
         return lock_group_arabic(msg, data, target)
       end
       if matches[2] == 'bots' then
-        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked bots ")
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] •••locked bots ")
         return lock_group_bots(msg, data, target)
       end
     if matches[2] == 'leave' then
-       savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked leaving ")
+       savelog(msg.to.id, name_log.." ["..msg.from.id.."] •••locked leaving 🚷 ")
        return lock_group_leave(msg, data, target)
      end
    end
     if matches[1] == 'unlock' then 
       local target = msg.to.id
       if matches[2] == 'name' then
-        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked name ")
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] •••unlocked name 〰〰 ")
         return unlock_group_namemod(msg, data, target)
       end
       if matches[2] == 'member' then
-        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked member ")
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] •••unlocked member 👀 ")
         return unlock_group_membermod(msg, data, target)
       end
       if matches[2] == 'photo' then
-        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked photo ")
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] •••unlocked photo 🌇 ")
         return unlock_group_photomod(msg, data, target)
       end
       if matches[2] == 'flood' then
-        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked flood ")
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] •••unlocked flood ⛔️ ")
         return unlock_group_floodmod(msg, data, target)
       end
       if matches[2] == 'arabic' then
-        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked arabic ")
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] •••unlocked arabic 🗣 ")
         return unlock_group_arabic(msg, data, target)
       end
       if matches[2] == 'bots' then
-        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked bots ")
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] •••unlocked bots 🤖 ")
         return unlock_group_bots(msg, data, target)
       end
     if matches[2] == 'leave' then
-       savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked leaving ")
+       savelog(msg.to.id, name_log.." ["..msg.from.id.."] •••unlocked leaving 🚷 ")
        return unlock_group_leave(msg, data, target)
      end
    end
